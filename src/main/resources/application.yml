@@ -1,8 +1,2 @@
-jda:
-  token:
-  ownerId:
-  forceGuild:
-  activity:
-
 server:
-  port:
+  port: 8080

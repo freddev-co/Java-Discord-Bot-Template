@@ -2,10 +2,10 @@ package co.freddev.javajdatemplate.bot;
 
 import co.freddev.javajdatemplate.bot.exception.JdaException;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +17,12 @@ import javax.security.auth.login.LoginException;
 public final class Bot {
     private static Bot instance;
     private final JDA jda;
+    private final Dotenv env;
 
-    @Value("${jda.token}")
-    String token;
+    private Bot() {
+        env = Dotenv.configure().load();
+        String token = env.get("TOKEN");
 
-    private Bot() throws LoginException {
         this.jda = JDABuilder.createDefault(token)
                 .setAutoReconnect(true)
                 .build();
@@ -40,5 +41,9 @@ public final class Bot {
             return jda;
         }
         throw new JdaException("Jda not exist!");
+    }
+
+    public Dotenv getEnv() {
+        return env;
     }
 }
