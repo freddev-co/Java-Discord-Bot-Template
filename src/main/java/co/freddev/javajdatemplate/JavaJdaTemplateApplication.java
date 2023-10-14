@@ -4,14 +4,12 @@ import co.freddev.javajdatemplate.bot.Bot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.security.auth.login.LoginException;
-
 @SpringBootApplication
 public class JavaJdaTemplateApplication {
 
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) {
         SpringApplication.run(JavaJdaTemplateApplication.class, args);
-        Bot.getInstance();
+        Bot instance = Bot.INSTANCE;
     }
 
 }
