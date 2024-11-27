@@ -19,7 +19,7 @@ If you want to use this template it would be nice if you left a star ⭐ for thi
 - Java `11`
 - Spring Boot `2.7.16`
 - Lombok
-- <a href="//github.com/DV8FromTheWorld/JDA">JDA</a> ``5.0.0-beta.15``
+- <a href="//github.com/DV8FromTheWorld/JDA">JDA</a> ``5.2.1``
 - <a href="//github.com/Chew/JDA-Chewtils">JDA Chewtils</a> ``2.0-SNAPSHOT``
 
 ## Setup
