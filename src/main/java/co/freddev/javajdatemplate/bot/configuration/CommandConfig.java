@@ -4,10 +4,10 @@ import co.freddev.javajdatemplate.bot.Bot;
 import co.freddev.javajdatemplate.bot.command.Ping;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -16,28 +16,36 @@ import javax.annotation.PostConstruct;
 @Slf4j
 public class CommandConfig {
 
-    private final JDA jda;
-    private final Dotenv env;
+    @Value("${discord.bot-name}")
+    private String botName;
+
+    @Value("${discord.token}")
+    private String token;
+
+    @Value("${discord.guild-id}")
+    private String guildId;
+
+    @Value("${discord.owner-id}")
+    private String ownerId;
 
     private final Ping ping;
 
     public CommandConfig(Ping ping) {
-        this.jda = Bot.INSTANCE.getJda();
-        this.env = Bot.INSTANCE.getEnv();
-
         this.ping = ping;
     }
 
     @PostConstruct
     public void init() {
+        Bot.INSTANCE.initialize(token);
+        JDA jda = Bot.INSTANCE.getJda();
         jda.addEventListener(getBotConfig());
     }
 
     private CommandClient getBotConfig() {
         CommandClientBuilder builder = new CommandClientBuilder();
-        builder.setOwnerId(env.get("OWNER_ID"));
-        builder.forceGuildOnly(env.get("FORCE_GUILD"));
-        builder.setActivity(Activity.watching(env.get("ACTIVITY")));
+        builder.setOwnerId(ownerId);
+        builder.forceGuildOnly(guildId);
+        builder.setActivity(Activity.watching(botName));
 
         // Registration SlashCommands
         builder.addSlashCommand(ping);

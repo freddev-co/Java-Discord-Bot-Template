@@ -1,2 +1,7 @@
 server:
   port: 8080
+discord:
+  bot-name:
+  token:
+  guild-id:
+  owner-id:
